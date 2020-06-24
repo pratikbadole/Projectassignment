@@ -1,0 +1,117 @@
+
+R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> makeCacheMatrix <- function(x = matrix()) {
++   j <- NULL
++   set <- function(y){
++   x <<- y
++   j <<- NULL
++   }
++   get <- function()x
++   setInverse <- function(inverse) j <<- inverse
++   getInverse <- function() j 
++   list(set = set, get = get, 
++   setInverse = setInverse, 
++   getInverse = getInverse)
++ }
+>  cacheSolve <- function(x, ...) {
++ ## Return a matrix that is the inverse of 'x'
++   j <- x$getInverse()
++   if(!is.null(j)){
++   message("getting cached data")
++   return(j)
++   }
++   mat <- x$get()
++   j <- solve(mat,...)
++   x$setInverse(j)
++   j
++ }
+> xval = seq(1,10,0.5)
+> yval = 30*xval/(2+xval)
+> plot(xval,yval)
+> Xvalue = c(1,2,3,4,5,6,7,8,9,10)
+> Yvalue = c(12, 23, 36, 48, 53, 64, 78, 89, 91, 110)
+> 
+> cch = c("a","b","c","d","e","f","g","h","i","j")
+> 
+> plot(Xvalue,Yvalue, type="o")
+> 
+> text(Xvalue+0.3, Yvalue, cch, col="blue", font=2)
+> 
+> text(5,90, "plotting Graph By Alisha", col="blue")
+> 
+> 
+> x <- seq(-5, 5, 0.01)
+> sigmoid = function(x) {
++   1 / (1 + exp(-x))
++ }
+> plot(x, sigmoid(x), col="green")
+> 
+> #=========== Cost Function ===========
+> weekly_cost_function <- function(i){
++   cost <- (ceiling(sum(i)/200)) * 1600 + (sum(i) * 10)
++   cost
++ }
+>  
+> weekly_cost_function(i = 120)
+[1] 2800
+> 
+> 
+> #=====================================
+> df <- read.table(text = '
++      Quarter Coupon      Total
++ 1   "Dec 06"  25027.072  132450574
++ 2   "Dec 07"  76386.820  194154767
++ 3   "Dec 08"  79622.147  221571135
++ 4   "Dec 09"  74114.416  205880072
++ 5   "Dec 10"  70993.058  188666980
++ 6   "Jun 06"  12048.162  139137919
++ 7   "Jun 07"  46889.369  165276325
++ 8   "Jun 08"  84732.537  207074374
++ 9   "Jun 09"  83240.084  221945162
++ 10  "Jun 10"  81970.143  236954249
++ 11  "Mar 06"   3451.248  116811392
++ 12  "Mar 07"  34201.197  155190418
++ 13  "Mar 08"  73232.900  212492488
++ 14  "Mar 09"  70644.948  203663201
++ 15  "Mar 10"  72314.945  203427892
++ 16  "Mar 11"  88708.663  214061240
++ 17  "Sep 06"  15027.252  121285335
++ 18  "Sep 07"  60228.793  195428991
++ 19  "Sep 08"  85507.062  257651399
++ 20  "Sep 09"  77763.365  215048147
++ 21  "Sep 10"  62259.691  168862119', header=TRUE)
+> 
+> str(df)
+'data.frame':   21 obs. of  3 variables:
+ $ Quarter: chr  "Dec 06" "Dec 07" "Dec 08" "Dec 09" ...
+ $ Coupon : num  25027 76387 79622 74114 70993 ...
+ $ Total  : int  132450574 194154767 221571135 205880072 188666980 139137919 165276325 207074374 221945162 236954249 ...
+> model <- lm(Coupon ~ Total, data=df)
+> new.df <- data.frame(Total=c(79037022, 83100656, 104299800))
+> predict(model, new.df)
+         1          2          3 
+-11295.194  -8637.443   5227.503 
+> 
+
+
+> #================================================> > > 
+> 
